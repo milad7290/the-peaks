@@ -11,24 +11,40 @@ import {
 import { HttpProvider } from "../../providers/http.provider";
 import { RootActions, RootState, RootThunk } from "../../store/root.types";
 import { IStory } from "./../../models/entities/stories/story-entity.interface";
+import { IGuardianApisResponse } from "../../models/interfaces/other/guardian-apis-response";
 
 export const fetchStories =
-  (skip: number, limit: number, query: string): RootThunk<void> =>
+  (options: {
+    page: number | null;
+    pageSize: number | null;
+    query: string | null;
+  }): RootThunk<void> =>
   async (dispatch: Dispatch<RootActions>) => {
     dispatch(StoryListRequest());
     try {
-      const { data } = await HttpProvider<[IStory[], number]>({
-        url: "/stories",
-        params: { skip, limit, query },
+      let url = "";
+      if (options.page) {
+        url = url + `page=${options.page}&`;
+      }
+      if (options.pageSize) {
+        url = url + `page-size=${options.pageSize}&`;
+      }
+      if (options.query) {
+        url = url + `q=${options.query}&`;
+      }
+      const { data } = await HttpProvider<IGuardianApisResponse>({
+        url,
+        // params: { skip, limit, query },
       });
 
-      dispatch(
-        StoryListSuccess({
-          items: data[0],
-          offset: skip + data[0].length,
-          total: data[1],
-        })
-      );
+      if (data.status === "ok") {
+        dispatch(
+          StoryListSuccess({
+            items: data.results,
+            total: data.total,
+          })
+        );
+      }
     } catch (error: any) {
       const { response } = error;
       dispatch(

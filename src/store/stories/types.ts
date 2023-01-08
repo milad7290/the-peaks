@@ -17,7 +17,7 @@ export type StoryState = {
 
 export const storyInitialState: StoryState = Object.freeze({
   generalState: {
-    limit: 25,
+    pageSize: 8,
     page: 0,
     query: "",
   },
@@ -30,7 +30,7 @@ export const storyInitialState: StoryState = Object.freeze({
 
 export enum StoryActionTypes {
   STORY_SET_PAGE = "story/set/page",
-  STORY_SET_LIMIT = "story/set/limit",
+  STORY_SET_PAGE_SIZE = "story/set/page_size",
   STORY_SET_QUERY = "story/set/query",
   STORY_LIST_REQUEST = "story/list/request",
   STORY_LIST_SUCCESS = "story/list/success",
@@ -46,8 +46,8 @@ interface StorySetPageAction extends Action {
   payload: number;
 }
 
-interface StorySetLimitAction extends Action {
-  type: typeof StoryActionTypes.STORY_SET_LIMIT;
+interface StorySetPageSizeAction extends Action {
+  type: typeof StoryActionTypes.STORY_SET_PAGE_SIZE;
   payload: number;
 }
 
@@ -64,7 +64,6 @@ interface StorySuccessAction extends Action {
   type: typeof StoryActionTypes.STORY_LIST_SUCCESS;
   payload: {
     items: IStory[];
-    offset: number;
     total: number;
   };
 }
@@ -73,7 +72,6 @@ interface AllStorySuccessAction extends Action {
   type: typeof StoryActionTypes.ALL_STORY_LIST_SUCCESS;
   payload: {
     items: IStory[];
-    offset: number;
     total: number;
   };
 }
@@ -100,7 +98,7 @@ interface StoryDetailFailureAction extends Action {
 export type StoryActions =
   | StorySetPageAction
   // | JustAddedStoryAction
-  | StorySetLimitAction
+  | StorySetPageSizeAction
   | StorySetQueryAction
   | StoryRequestAction
   | StorySuccessAction

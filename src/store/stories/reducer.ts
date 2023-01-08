@@ -13,8 +13,8 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
         draft.generalState.page = action.payload;
         return;
 
-      case StoryActionTypes.STORY_SET_LIMIT:
-        draft.generalState.limit = action.payload;
+      case StoryActionTypes.STORY_SET_PAGE_SIZE:
+        draft.generalState.pageSize = action.payload;
         draft.generalState.page = 0;
         return;
 

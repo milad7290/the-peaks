@@ -9,9 +9,9 @@ export const StorySetPage = (page: number): StoryActions => ({
   payload: page
 });
 
-export const StorySetLimit = (limit: number): StoryActions => ({
-  type: StoryActionTypes.STORY_SET_LIMIT,
-  payload: limit
+export const StorySetPageSize = (pageSize: number): StoryActions => ({
+  type: StoryActionTypes.STORY_SET_PAGE_SIZE,
+  payload: pageSize
 });
 
 export const StorySetQuery = (query: string): StoryActions => ({
@@ -25,7 +25,6 @@ export const StoryListRequest = (): StoryActions => ({
 
 export const StoryListSuccess = (payload: {
   items: IStory[];
-  offset: number;
   total: number;
 }): StoryActions => ({
   type: StoryActionTypes.STORY_LIST_SUCCESS,

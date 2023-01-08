@@ -1,5 +1,5 @@
 export interface GeneralState {
-  limit: number;
+  pageSize: number;
   page: number;
   query: string;
 }

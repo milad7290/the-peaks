@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import RootReducer from './root.reducer';
+import RootReducer from "./root.reducer";
 
 import {
   StoryActions,

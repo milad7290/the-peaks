@@ -19,7 +19,8 @@ export const HttpProvider = <T>({
   contentType?: string;
   responseType?: ResponseType;
 }): AxiosPromise<T> => {
-  const fullUrl = url.startsWith("/") ? `${base}${url}` : `${base}/${url}`;
+  const apiKey = process.env.REACT_APP_REST_ENDPOINT_API_KEY;
+  const fullUrl = `${base}${url}api-key=${apiKey}`;
   const config: AxiosRequestConfig = {
     method,
     responseType,

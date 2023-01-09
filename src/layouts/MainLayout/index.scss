@@ -1,10 +1,20 @@
-.root {
-.wrapper{
-  .contentContainer{
-    .content{
-      
+@import "../../assets/styles/variables/theme.scss";
+
+.root-layout {
+  .content {
+    min-height: 1363px;
+    padding-bottom: 105px;
+  }
+  .footer {
+    height: 243px;
+    background-color: $primaryColor;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .root-layout {
+    .footer {
+      height: 100px;
     }
   }
 }
-}
-

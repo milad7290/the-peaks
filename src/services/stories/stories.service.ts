@@ -12,6 +12,7 @@ import { HttpProvider } from "../../providers/http.provider";
 import { RootActions, RootState, RootThunk } from "../../store/root.types";
 import { IStory } from "./../../models/entities/stories/story-entity.interface";
 import { IGuardianApisResponse } from "../../models/interfaces/other/guardian-apis-response";
+import { GenerateUrl } from "../../utils/generate-url";
 
 export const fetchStories =
   (options: {
@@ -22,26 +23,23 @@ export const fetchStories =
   async (dispatch: Dispatch<RootActions>) => {
     dispatch(StoryListRequest());
     try {
-      let url = "";
-      if (options.page) {
-        url = url + `page=${options.page}&`;
-      }
-      if (options.pageSize) {
-        url = url + `page-size=${options.pageSize}&`;
-      }
-      if (options.query) {
-        url = url + `q=${options.query}&`;
-      }
-      const { data } = await HttpProvider<IGuardianApisResponse>({
-        url,
-        // params: { skip, limit, query },
+      const url = GenerateUrl({
+        page: options.page,
+        pageSize: options.pageSize,
+        query: options.query,
       });
 
-      if (data.status === "ok") {
+      const { data:{response} } = await HttpProvider<{ response: IGuardianApisResponse }>({
+        url,
+      });
+
+
+      if (response.status === "ok") {
+
         dispatch(
           StoryListSuccess({
-            items: data.results,
-            total: data.total,
+            items: response.results,
+            total: response.total,
           })
         );
       }

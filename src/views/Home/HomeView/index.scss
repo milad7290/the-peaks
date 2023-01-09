@@ -1,0 +1,149 @@
+@import "../../../assets/styles/variables/theme.scss";
+
+.primary-section {
+  .main-page-title-container {
+    margin-top: 44px;
+    display: flex;
+    .left-part {
+      display: flex;
+      width: 70%;
+      position: relative;
+      .main-page-title {
+        font-size: 48px;
+        font-weight: 700;
+        text-align: start;
+        color: rgba(0, 0, 0, 0.87);
+        margin: 0;
+      }
+      .bookmark-link {
+        width: 130px;
+        height: 21px;
+        color: white;
+        background-color: $primaryColor;
+        display: block;
+        text-decoration: none;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.06);
+        border-radius: 4px;
+        padding: 5px 12px 4px 15px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        position: absolute;
+        right: 0;
+        top: 14px;
+        span {
+          position: relative;
+          right: 3px;
+          top: 3px;
+
+          img {
+          }
+        }
+      }
+    }
+    .right-part {
+      width: 30%;
+      select {
+        width: 90%;
+        float: right;
+        height: 40px;
+        position: relative;
+        top: 6px;
+        border: none;
+        border-bottom: 1px solid;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        outline: none;
+      }
+    }
+  }
+
+  .top-story-container {
+    display: grid;
+
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    height: 423px;
+    margin-top: 25px;
+    .head-line-story {
+      grid-row-start: 1;
+      grid-column-start: 1;
+      grid-row-end: 3;
+      grid-column-end: 3;
+      width: 100%;
+    }
+    .other-stories {
+      height: 100%;
+      width: 53%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 2fr 1fr;
+      grid-column-gap: 30px;
+      grid-row-gap: 30px;
+    }
+  }
+
+  .bottom-story-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+    margin-top: 30px;
+  }
+}
+
+.secondary-section {
+  margin-top: 65px;
+  .secondary-title {
+    text-align: start;
+    font-family: "Georgia";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+  }
+  .secondary-story-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+    margin-top: 30px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .primary-section {
+    .main-page-title-container {
+      .left-part {
+        display: block;
+        width: 49%;
+        .main-page-title {
+          font-size: 28px;
+          margin-left: 5px;
+        }
+        .bookmark-link {
+          position: relative;
+          right: -10px;
+          span {
+            img {
+            }
+          }
+        }
+      }
+      .right-part {
+        width: 49%;
+        select {
+          top: 36px;
+        }
+      }
+    }
+  }
+}

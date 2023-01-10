@@ -7,18 +7,18 @@ interface HeadLineStoryProps {
 }
 
 const HeadLineStory: FC<HeadLineStoryProps> = ({ story, ...rest }) => {
-  let borderBottomColor = "red";
+  let borderBottomColor = "green";
   switch (story.pillarName) {
     case "Sport":
-      borderBottomColor = "green";
+      borderBottomColor = "#F50057";
       break;
 
-    case "Arts":
-      borderBottomColor = "yellow";
+    case "Culture":
+      borderBottomColor = "#FFCA28";
       break;
 
-    case "Opinion":
-      borderBottomColor = "blue";
+    case "Lifestyle":
+      borderBottomColor = "#2196F3";
       break;
 
     default:
@@ -37,7 +37,10 @@ const HeadLineStory: FC<HeadLineStoryProps> = ({ story, ...rest }) => {
         />
        
       )}
-       <div className="story-content"></div>
+       <div className="story-content">
+        <h2>{story.fields.headline}</h2>
+        <p>{story.fields.trailText}</p>
+       </div>
     </div>
   );
 };

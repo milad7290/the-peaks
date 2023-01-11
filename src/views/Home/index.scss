@@ -1,4 +1,4 @@
-@import "../../../assets/styles/variables/theme.scss";
+@import "../../assets/styles/variables/theme.scss";
 
 .primary-section {
   .main-page-title-container {
@@ -144,6 +144,48 @@
           top: 36px;
         }
       }
+    }
+
+    .top-story-container {
+      display: block;
+      height: auto;
+      margin: auto;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      width: 100%;
+      .head-line-story {
+        display: block;
+        height: auto;
+        margin: auto;
+        margin-top: 25px;
+        margin-bottom: 50px;
+        width: 100%;
+      }
+    }
+
+    .bottom-story-container {
+      display: block;
+      height: auto;
+      margin: auto;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      width: 100%;
+    }
+  }
+
+  .secondary-section {
+    margin-top: 65px;
+    .secondary-title {
+      font-size: 20px;
+      margin-left: 5px;
+    }
+    .secondary-story-container {
+      display: block;
+      height: auto;
+      margin: auto;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      width: 100%;
     }
   }
 }

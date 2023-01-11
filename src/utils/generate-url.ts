@@ -1,14 +1,15 @@
-
 export const GenerateUrl = ({
+  useSearch = false,
   page,
   pageSize,
   query,
 }: {
+  useSearch: boolean;
   page?: number | null;
   pageSize: number | null;
   query?: string | null;
 }): string => {
-  let url = "";
+  let url = useSearch ? "search?" : "";
   if (page) {
     url = url + `page=${page}&`;
   }

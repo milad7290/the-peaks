@@ -1,0 +1,37 @@
+@import "../../assets/styles/variables/theme.scss";
+
+.loading-section {
+  min-height: 1363px;
+  padding-bottom: 105px;
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid white;
+    border-top: 6px solid #09357B;
+    border-right: 6px solid #09357B;
+    border-left: 6px solid #09357B;
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+  }
+  
+  .spinner-container {
+    display: grid;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+
+}

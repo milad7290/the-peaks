@@ -1,18 +1,33 @@
 import PropTypes from "prop-types";
-import type { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import React from "react";
-import TopBar from "./TopBar";
+import TopBar from "../../components/TopBar";
 import "./index.scss";
+import SearchResult from "../../views/SearchResult";
+import LoadingPage from "../../components/LoadingPage";
 
 interface MainLayoutProps {
   children?: ReactNode;
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <div className={"root-layout"}>
-      <TopBar />
-      <div className={"content"}>{children}</div>
+      <TopBar query={query} setQuery={setQuery} />
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          {query.length > 0 ? (
+            <SearchResult />
+          ) : (
+            <div className={"content"}>{children}</div>
+          )}
+        </>
+      )}
       <footer className="footer"></footer>
     </div>
   );

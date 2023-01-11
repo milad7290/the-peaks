@@ -13,8 +13,8 @@ export interface IStory extends IBaseEntity {
   pillarName: string;
   fields: {
     headline: string;
-    trailText: string;
+    trailText: string| null | undefined;
     body: string;
-    thumbnail: string;
+    thumbnail?: string | null | undefined;
   };
 }

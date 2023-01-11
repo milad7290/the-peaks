@@ -24,18 +24,19 @@ export const fetchStories =
     dispatch(StoryListRequest());
     try {
       const url = GenerateUrl({
+        useSearch: true,
         page: options.page,
         pageSize: options.pageSize,
         query: options.query,
       });
 
-      const { data:{response} } = await HttpProvider<{ response: IGuardianApisResponse }>({
+      const {
+        data: { response },
+      } = await HttpProvider<{ response: IGuardianApisResponse }>({
         url,
       });
 
-
       if (response.status === "ok") {
-
         dispatch(
           StoryListSuccess({
             items: response.results,

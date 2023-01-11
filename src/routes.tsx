@@ -1,8 +1,10 @@
 import React, { Fragment, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
+import Bookmarks from "./views/Bookmarks";
 import NotFoundView from "./views/Errors/NotFoundView";
-import HomeView from "./views/Home/HomeView";
+import Home from "./views/Home";
+import StoryDetails from "./views/StoryDetails";
 
 type RoutesType = {
   exact?: boolean;
@@ -56,7 +58,19 @@ const routes: RoutesType = [
       {
         exact: true,
         path: "/",
-        component: HomeView,
+        component: Home,
+      },
+
+      {
+        exact: true,
+        path: "/bookmarks",
+        component: Bookmarks,
+      },
+
+      {
+        exact: true,
+        path: "/article",
+        component: StoryDetails,
       },
 
       {

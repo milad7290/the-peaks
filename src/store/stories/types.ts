@@ -7,14 +7,18 @@ export type StoryState = {
   generalState: GeneralState;
   totalTopHome: number;
   totalCatBaseHome: number;
+  totalSearch: number;
   topHomeItems: IStory[];
   catBaseHomeItems: IStory[];
+  searchItems: IStory[];
   selectedItem?: IStory | null;
   fetchTopStoryLoading: boolean;
   fetchCatBaseStoryLoading: boolean;
+  fetchSearchStoryLoading: boolean;
   detailLoading: boolean;
   fetchTopStoryError?: ErrorReason | null;
   fetchCatBaseStoryError?: ErrorReason | null;
+  fetchSearchStoryError?: ErrorReason | null;
   detailError?: ErrorReason | null;
 };
 
@@ -26,10 +30,13 @@ export const storyInitialState: StoryState = Object.freeze({
   },
   totalTopHome: 0,
   totalCatBaseHome: 0,
+  totalSearch: 0,
   topHomeItems: [],
   catBaseHomeItems: [],
+  searchItems: [],
   fetchTopStoryLoading: false,
   fetchCatBaseStoryLoading: false,
+  fetchSearchStoryLoading: false,
   detailLoading: false,
 });
 
@@ -43,6 +50,10 @@ export enum StoryActionTypes {
   STORY_CAT_BASE_LIST_REQUEST = "story/cat_base_list/request",
   STORY_CAT_BASE_LIST_SUCCESS = "story/cat_base_list/success",
   STORY_CAT_BASE_LIST_FAILURE = "story/cat_base_list/failure",
+  STORY_SEARCH_LIST_REQUEST = "story/search/request",
+  STORY_SEARCH_LIST_SUCCESS = "story/search/success",
+  STORY_SEARCH_LIST_FAILURE = "story/search/failure",
+  STORY_SEARCH_LIST_CLEAR = "story/search/clear",
   STORY_DETAIL_REQUEST = "story/detail/request",
   STORY_DETAIL_SUCCESS = "story/detail/success",
   STORY_DETAIL_FAILURE = "story/detail/failure",
@@ -96,6 +107,25 @@ interface CatBaseStoryFailureAction extends Action {
   payload: ErrorReason | null | undefined;
 }
 
+interface SearchStoryRequestAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_LIST_REQUEST;
+}
+
+interface SearchStorySuccessAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_LIST_SUCCESS;
+  payload: {
+    items: IStory[];
+    total: number;
+  };
+}
+interface SearchStoryFailureAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_LIST_FAILURE;
+  payload: ErrorReason | null | undefined;
+}
+
+interface SearchStoryClearAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_LIST_CLEAR;
+}
 
 interface StoryDetailRequestAction extends Action {
   type: typeof StoryActionTypes.STORY_DETAIL_REQUEST;
@@ -122,6 +152,10 @@ export type StoryActions =
   | CatBaseStoryRequestAction
   | CatBaseStorySuccessAction
   | CatBaseStoryFailureAction
+  | SearchStoryRequestAction
+  | SearchStorySuccessAction
+  | SearchStoryFailureAction
+  |SearchStoryClearAction
   | StoryDetailRequestAction
   | StoryDetailSuccessAction
   | StoryDetailFailureAction;

@@ -6,6 +6,9 @@ import {
   StoryDetailFailure,
   StoryDetailRequest,
   StoryDetailSuccess,
+  StorySearchListFailure,
+  StorySearchListRequest,
+  StorySearchListSuccess,
   StoryTopListFailure,
   StoryTopListRequest,
   StoryTopListSuccess,
@@ -92,6 +95,42 @@ export const fetchCatBaseStories =
     }
   };
 
+export const fetchSearchStories =
+  (filters: IStoryFilter): RootThunk<void> =>
+  async (dispatch: Dispatch<RootActions>) => {
+    dispatch(StorySearchListRequest());
+    try {
+      const url = GenerateUrl(filters);
+
+      const {
+        data: { response },
+      } = await HttpProvider<{ response: IGuardianApisResponse }>({
+        url,
+      });
+
+      if (response.status === "ok") {
+        dispatch(
+          StorySearchListSuccess({
+            items: response.results,
+            total: response.total,
+          })
+        );
+      }
+    } catch (error: any) {
+      const { response } = error;
+      dispatch(
+        StorySearchListFailure(
+          response && response.data
+            ? response.data
+            : {
+                message: "Something went wrong!",
+                status: "unknown",
+              }
+        )
+      );
+    }
+  };
+
 export const fetchStory =
   (id: string | null): RootThunk<void> =>
   async (dispatch: Dispatch<RootActions>, getState: () => RootState) => {
@@ -110,7 +149,7 @@ export const fetchStory =
         const {
           data: { response },
         } = await HttpProvider<{ response: IGuardianApisSingleResponse }>({
-          url
+          url,
         });
 
         if (response.status === "ok") {

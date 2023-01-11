@@ -100,6 +100,20 @@
     grid-row-gap: 30px;
     margin-top: 30px;
   }
+
+  .no-result{
+    text-align: center;
+    padding-top: 100px;
+    font-size: 22px;
+    color: gray;
+  }
+  .please-start-search{
+    text-align: center;
+    padding-top: 100px;
+    font-size: 20px;
+    font-weight: 500;
+    color: $primaryColor;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 767px) {

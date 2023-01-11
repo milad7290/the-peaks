@@ -54,6 +54,28 @@ export const StoryCatBaseListFailure = (error?: ErrorReason| null): StoryActions
   payload: error
 });
 
+export const StorySearchListRequest = (): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_LIST_REQUEST
+});
+
+export const StorySearchListSuccess = (payload: {
+  items: IStory[];
+  total: number;
+}): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_LIST_SUCCESS,
+  payload
+});
+
+export const StorySearchListFailure = (error?: ErrorReason| null): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_LIST_FAILURE,
+  payload: error
+});
+
+export const ClearSearchListSuccess = (): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_LIST_CLEAR
+});
+
+
 export const StoryDetailRequest = (): StoryActions => ({
   type: StoryActionTypes.STORY_DETAIL_REQUEST
 });

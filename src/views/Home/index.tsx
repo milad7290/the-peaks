@@ -18,6 +18,7 @@ import PartialStory from "../../components/Story/PartialStory";
 import { StoryOutputType } from "../../models/enums/story/story-output-type.enum";
 import { Link } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
+import SelectInput from "../../components/SelectInput";
 
 const Home: FC = () => {
   const dispatch = useDispatch();
@@ -89,23 +90,11 @@ const Home: FC = () => {
                 </Link>
               </div>
               <div className="right-part">
-                <select
-                  value={selected.value}
-                  onChange={(e) => {
-                    const foundedOption = options.find(
-                      (item) => item.value === e.target.value
-                    );
-                    if (foundedOption) {
-                      setSelected(foundedOption);
-                    }
-                  }}
-                >
-                  {options.map((item) => (
-                    <option value={item.value} key={item.value}>
-                      {item.text}
-                    </option>
-                  ))}
-                </select>
+                <SelectInput
+                  selected={selected}
+                  setSelected={setSelected}
+                  options={options}
+                />
               </div>
             </div>
 

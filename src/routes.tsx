@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 import Bookmarks from "./views/Bookmarks";
 import NotFoundView from "./views/Errors/NotFoundView";
 import Home from "./views/Home";
+import SearchResult from "./views/SearchResult";
 import StoryDetails from "./views/StoryDetails";
 
 type RoutesType = {
@@ -65,6 +66,12 @@ const routes: RoutesType = [
         exact: true,
         path: "/bookmarks",
         component: Bookmarks,
+      },
+
+      {
+        exact: true,
+        path: "/search-results",
+        component:  SearchResult,
       },
 
       {

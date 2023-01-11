@@ -55,6 +55,29 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
         draft.fetchCatBaseStoryError = action.payload;
         return;
 
+      case StoryActionTypes.STORY_SEARCH_LIST_REQUEST:
+        draft.fetchSearchStoryLoading = true;
+        draft.fetchSearchStoryError = null;
+        return;
+
+      case StoryActionTypes.STORY_SEARCH_LIST_SUCCESS:
+        draft.searchItems = action.payload.items;
+        draft.fetchSearchStoryLoading = false;
+        draft.totalSearch = action.payload.total;
+        return;
+
+      case StoryActionTypes.STORY_SEARCH_LIST_FAILURE:
+        draft.fetchSearchStoryLoading = false;
+        draft.fetchSearchStoryError = action.payload;
+        return;
+
+      case StoryActionTypes.STORY_SEARCH_LIST_CLEAR:
+        draft.generalState.query = "";
+        draft.searchItems = [];
+        draft.fetchSearchStoryLoading = false;
+        draft.totalSearch = 0;
+        return;
+
       case StoryActionTypes.STORY_DETAIL_REQUEST:
         draft.detailLoading = true;
         draft.detailError = null;

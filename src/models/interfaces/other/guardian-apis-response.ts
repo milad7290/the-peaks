@@ -11,3 +11,11 @@ export interface IGuardianApisResponse {
   orderBy: string;
   results: IStory[];
 }
+
+
+export interface IGuardianApisSingleResponse {
+  status: string;
+  userTier: string;
+  total: number;
+  content: IStory;
+}

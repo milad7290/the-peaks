@@ -86,6 +86,10 @@
       p {
         margin-top: 10px;
       }
+      *{
+        width: 100%;
+        height: auto;
+      }
     }
     .article-image {
       max-width: 445px;
@@ -109,6 +113,20 @@
         opacity: 0.5;
       }
     }
+    .no-article-image {
+      background-color: #0D47A1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      height: 276px;
+      align-items: center;
+      .logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+  }
   }
 }
 

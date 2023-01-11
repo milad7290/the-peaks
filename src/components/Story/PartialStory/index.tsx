@@ -15,21 +15,23 @@ const PartialStory: FC<PartialStoryProps> = ({
   ...rest
 }) => {
   let borderBottomColor = "green";
-  switch (story.pillarName) {
-    case "Sport":
-      borderBottomColor = "#F50057";
-      break;
+  if (story.sectionName) {
+    switch (story.sectionName) {
+      case "Sport":
+        borderBottomColor = "#F50057";
+        break;
 
-    case "Culture":
-      borderBottomColor = "#FFCA28";
-      break;
+      case "Culture":
+        borderBottomColor = "#FFCA28";
+        break;
 
-    case "Lifestyle":
-      borderBottomColor = "#2196F3";
-      break;
+      case "Lifestyle":
+        borderBottomColor = "#2196F3";
+        break;
 
-    default:
-      break;
+      default:
+        break;
+    }
   }
 
   let containerClass = "main-story-container";

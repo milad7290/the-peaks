@@ -19,29 +19,38 @@ export const StorySetQuery = (query: string): StoryActions => ({
   payload: query
 });
 
-export const StoryListRequest = (): StoryActions => ({
-  type: StoryActionTypes.STORY_LIST_REQUEST
+export const StoryTopListRequest = (): StoryActions => ({
+  type: StoryActionTypes.STORY_TOP_LIST_REQUEST
 });
 
-export const StoryListSuccess = (payload: {
+export const StoryTopListSuccess = (payload: {
   items: IStory[];
   total: number;
 }): StoryActions => ({
-  type: StoryActionTypes.STORY_LIST_SUCCESS,
+  type: StoryActionTypes.STORY_TOP_LIST_SUCCESS,
   payload
 });
 
-export const AllStoryListSuccess = (payload: {
+export const StoryTopListFailure = (error?: ErrorReason| null): StoryActions => ({
+  type: StoryActionTypes.STORY_TOP_LIST_FAILURE,
+  payload: error
+});
+
+
+export const StoryCatBaseListRequest = (): StoryActions => ({
+  type: StoryActionTypes.STORY_CAT_BASE_LIST_REQUEST
+});
+
+export const StoryCatBaseListSuccess = (payload: {
   items: IStory[];
-  offset: number;
   total: number;
 }): StoryActions => ({
-  type: StoryActionTypes.ALL_STORY_LIST_SUCCESS,
+  type: StoryActionTypes.STORY_CAT_BASE_LIST_SUCCESS,
   payload
 });
 
-export const StoryListFailure = (error?: ErrorReason| null): StoryActions => ({
-  type: StoryActionTypes.STORY_LIST_FAILURE,
+export const StoryCatBaseListFailure = (error?: ErrorReason| null): StoryActions => ({
+  type: StoryActionTypes.STORY_CAT_BASE_LIST_FAILURE,
   payload: error
 });
 

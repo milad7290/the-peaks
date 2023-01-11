@@ -23,26 +23,36 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
         draft.generalState.page = 0;
         return;
 
-      case StoryActionTypes.STORY_LIST_REQUEST:
-        draft.fetchLoading = true;
-        draft.fetchError = null;
+      case StoryActionTypes.STORY_TOP_LIST_REQUEST:
+        draft.fetchTopStoryLoading = true;
+        draft.fetchTopStoryError = null;
         return;
 
-      case StoryActionTypes.STORY_LIST_SUCCESS:
-        draft.items = action.payload.items;
-        draft.fetchLoading = false;
-        draft.total = action.payload.total;
+      case StoryActionTypes.STORY_TOP_LIST_SUCCESS:
+        draft.topHomeItems = action.payload.items;
+        draft.fetchTopStoryLoading = false;
+        draft.totalTopHome = action.payload.total;
         return;
 
-      case StoryActionTypes.ALL_STORY_LIST_SUCCESS:
-        draft.allItems = action.payload.items;
-        draft.fetchLoading = false;
-        draft.total = action.payload.total;
+      case StoryActionTypes.STORY_TOP_LIST_FAILURE:
+        draft.fetchTopStoryLoading = false;
+        draft.fetchTopStoryError = action.payload;
         return;
 
-      case StoryActionTypes.STORY_LIST_FAILURE:
-        draft.fetchLoading = false;
-        draft.fetchError = action.payload;
+      case StoryActionTypes.STORY_CAT_BASE_LIST_REQUEST:
+        draft.fetchCatBaseStoryLoading = true;
+        draft.fetchCatBaseStoryError = null;
+        return;
+
+      case StoryActionTypes.STORY_CAT_BASE_LIST_SUCCESS:
+        draft.catBaseHomeItems = action.payload.items;
+        draft.fetchCatBaseStoryLoading = false;
+        draft.totalCatBaseHome = action.payload.total;
+        return;
+
+      case StoryActionTypes.STORY_CAT_BASE_LIST_FAILURE:
+        draft.fetchCatBaseStoryLoading = false;
+        draft.fetchCatBaseStoryError = action.payload;
         return;
 
       case StoryActionTypes.STORY_DETAIL_REQUEST:

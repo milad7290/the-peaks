@@ -1,6 +1,5 @@
 import React, { FC, useCallback, useEffect } from "react";
 import Page from "../../components/Page";
-import { fetchStories } from "../../services/stories/stories.service";
 import { useDispatch, useSelector } from "react-redux";
 import { generalStateStory } from "../../store/stories/selectors";
 import type {} from "redux-thunk/extend-redux";
@@ -13,19 +12,19 @@ const Bookmarks: FC = () => {
   const dispatch = useDispatch();
   const generalState = useSelector(generalStateStory);
 
-  const getData = useCallback(() => {
-    dispatch(
-      fetchStories({
-        page: generalState.page,
-        pageSize: generalState.pageSize,
-        query: null,
-      })
-    );
-  }, [dispatch, generalState]);
+  // const getData = useCallback(() => {
+  //   dispatch(
+  //     fetchStories({
+  //       page: generalState.page,
+  //       pageSize: generalState.pageSize,
+  //       query: null,
+  //     })
+  //   );
+  // }, [dispatch, generalState]);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   const testStory = {
     id: "culture/2023/jan/09/alan-sugar-the-apprentice-candidate-milliionaires",

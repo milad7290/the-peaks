@@ -1,15 +1,15 @@
+import { IStoryFilter } from "../models/interfaces/story/story-filter.interface";
+
 export const GenerateUrl = ({
   useSearch = false,
   page,
   pageSize,
   query,
-}: {
-  useSearch: boolean;
-  page?: number | null;
-  pageSize: number | null;
-  query?: string | null;
-}): string => {
-  let url = useSearch ? "search?" : "";
+  section,
+  orderBy = "newest",
+  showFields,
+}: IStoryFilter): string => {
+  let url = useSearch ? "search?" :  "?" ;
   if (page) {
     url = url + `page=${page}&`;
   }
@@ -18,6 +18,15 @@ export const GenerateUrl = ({
   }
   if (query) {
     url = url + `q=${query}&`;
+  }
+  if (section) {
+    url = url + `section=${section}&`;
+  }
+  if (orderBy) {
+    url = url + `order-by=${orderBy}&`;
+  }
+  if (showFields) {
+    url = url + `show-fields=${showFields}&`;
   }
   return url;
 };

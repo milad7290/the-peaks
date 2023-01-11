@@ -4,7 +4,6 @@ import React from "react";
 import TopBar from "../../components/TopBar";
 import "./index.scss";
 import SearchResult from "../../views/SearchResult";
-import LoadingPage from "../../components/LoadingPage";
 
 interface MainLayoutProps {
   children?: ReactNode;
@@ -12,22 +11,17 @@ interface MainLayoutProps {
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [query, setQuery] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <div className={"root-layout"}>
       <TopBar query={query} setQuery={setQuery} />
-      {loading ? (
-        <LoadingPage />
+
+      {query.length > 0 ? (
+        <SearchResult />
       ) : (
-        <>
-          {query.length > 0 ? (
-            <SearchResult />
-          ) : (
-            <div className={"content"}>{children}</div>
-          )}
-        </>
+        <div className={"content"}>{children}</div>
       )}
+
       <footer className="footer"></footer>
     </div>
   );

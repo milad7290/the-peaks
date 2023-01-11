@@ -1,34 +1,31 @@
 import { Dispatch } from "react";
 import {
-  AllStoryListSuccess,
+  StoryCatBaseListFailure,
+  StoryCatBaseListRequest,
+  StoryCatBaseListSuccess,
   StoryDetailFailure,
   StoryDetailRequest,
   StoryDetailSuccess,
-  StoryListFailure,
-  StoryListRequest,
-  StoryListSuccess,
+  StoryTopListFailure,
+  StoryTopListRequest,
+  StoryTopListSuccess,
 } from "../../store/stories/actions";
 import { HttpProvider } from "../../providers/http.provider";
 import { RootActions, RootState, RootThunk } from "../../store/root.types";
 import { IStory } from "./../../models/entities/stories/story-entity.interface";
-import { IGuardianApisResponse } from "../../models/interfaces/other/guardian-apis-response";
+import {
+  IGuardianApisResponse,
+  IGuardianApisSingleResponse,
+} from "../../models/interfaces/other/guardian-apis-response";
 import { GenerateUrl } from "../../utils/generate-url";
+import { IStoryFilter } from "../../models/interfaces/story/story-filter.interface";
 
-export const fetchStories =
-  (options: {
-    page: number | null;
-    pageSize: number | null;
-    query: string | null;
-  }): RootThunk<void> =>
+export const fetchTopStories =
+  (filters: IStoryFilter): RootThunk<void> =>
   async (dispatch: Dispatch<RootActions>) => {
-    dispatch(StoryListRequest());
+    dispatch(StoryTopListRequest());
     try {
-      const url = GenerateUrl({
-        useSearch: true,
-        page: options.page,
-        pageSize: options.pageSize,
-        query: options.query,
-      });
+      const url = GenerateUrl(filters);
 
       const {
         data: { response },
@@ -38,7 +35,7 @@ export const fetchStories =
 
       if (response.status === "ok") {
         dispatch(
-          StoryListSuccess({
+          StoryTopListSuccess({
             items: response.results,
             total: response.total,
           })
@@ -47,7 +44,7 @@ export const fetchStories =
     } catch (error: any) {
       const { response } = error;
       dispatch(
-        StoryListFailure(
+        StoryTopListFailure(
           response && response.data
             ? response.data
             : {
@@ -59,25 +56,31 @@ export const fetchStories =
     }
   };
 
-export const fetchAllStories =
-  (): RootThunk<void> => async (dispatch: Dispatch<RootActions>) => {
-    dispatch(StoryListRequest());
+export const fetchCatBaseStories =
+  (filters: IStoryFilter): RootThunk<void> =>
+  async (dispatch: Dispatch<RootActions>) => {
+    dispatch(StoryCatBaseListRequest());
     try {
-      const { data } = await HttpProvider<IStory[]>({
-        url: "/stories/all",
+      const url = GenerateUrl(filters);
+
+      const {
+        data: { response },
+      } = await HttpProvider<{ response: IGuardianApisResponse }>({
+        url,
       });
 
-      dispatch(
-        AllStoryListSuccess({
-          items: data,
-          offset: data.length,
-          total: data.length,
-        })
-      );
+      if (response.status === "ok") {
+        dispatch(
+          StoryCatBaseListSuccess({
+            items: response.results,
+            total: response.total,
+          })
+        );
+      }
     } catch (error: any) {
       const { response } = error;
       dispatch(
-        StoryListFailure(
+        StoryCatBaseListFailure(
           response && response.data
             ? response.data
             : {
@@ -90,25 +93,34 @@ export const fetchAllStories =
   };
 
 export const fetchStory =
-  (id?: string): RootThunk<void> =>
+  (id: string | null): RootThunk<void> =>
   async (dispatch: Dispatch<RootActions>, getState: () => RootState) => {
-    if (!id || !id.length) {
-      dispatch(StoryDetailSuccess(null));
-    }
     dispatch(StoryDetailRequest());
     try {
       if (id) {
-        const { data } = await HttpProvider<IStory>({
-          url: `/stories/${id}`,
+        let url = `${id}`;
+        url =
+          url +
+          GenerateUrl({
+            useSearch: false,
+            showFields: "headline,trailText,thumbnail,body",
+            orderBy: null,
+          });
+
+        const {
+          data: { response },
+        } = await HttpProvider<{ response: IGuardianApisSingleResponse }>({
+          url
         });
-        if (!data) {
+
+        if (response.status === "ok") {
+          dispatch(StoryDetailSuccess(response.content));
+        } else {
           dispatch(
             StoryDetailFailure({ message: "Not found!", statusCode: 404 })
           );
           return;
         }
-
-        dispatch(StoryDetailSuccess(data));
       }
     } catch (error: any) {
       const { response } = error;

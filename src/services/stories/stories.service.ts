@@ -6,6 +6,9 @@ import {
   StoryDetailFailure,
   StoryDetailRequest,
   StoryDetailSuccess,
+  StorySearchListConcatFailure,
+  StorySearchListConcatRequest,
+  StorySearchListConcatSuccess,
   StorySearchListFailure,
   StorySearchListRequest,
   StorySearchListSuccess,
@@ -98,7 +101,12 @@ export const fetchCatBaseStories =
 export const fetchSearchStories =
   (filters: IStoryFilter): RootThunk<void> =>
   async (dispatch: Dispatch<RootActions>) => {
-    dispatch(StorySearchListRequest());
+    const loadMore = filters.page && filters.page > 1;
+    if (loadMore) {
+      dispatch(StorySearchListConcatRequest());
+    } else {
+      dispatch(StorySearchListRequest());
+    }
     try {
       const url = GenerateUrl(filters);
 
@@ -109,16 +117,38 @@ export const fetchSearchStories =
       });
 
       if (response.status === "ok") {
-        dispatch(
-          StorySearchListSuccess({
-            items: response.results,
-            total: response.total,
-          })
-        );
+        if (loadMore) {
+          dispatch(
+            StorySearchListConcatSuccess({
+              items: response.results,
+              total: response.total,
+              pages: response.pages,
+            })
+          );
+        } else {
+          dispatch(
+            StorySearchListSuccess({
+              items: response.results,
+              total: response.total,
+              pages: response.pages,
+            })
+          );
+        }
       }
     } catch (error: any) {
       const { response } = error;
-      dispatch(
+      if (loadMore) {
+        dispatch(
+          StorySearchListConcatFailure(
+            response && response.data
+              ? response.data
+              : {
+                  message: "Something went wrong!",
+                  status: "unknown",
+                }
+          )
+        );
+      } else {
         StorySearchListFailure(
           response && response.data
             ? response.data
@@ -126,8 +156,8 @@ export const fetchSearchStories =
                 message: "Something went wrong!",
                 status: "unknown",
               }
-        )
-      );
+        );
+      }
     }
   };
 

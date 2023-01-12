@@ -15,23 +15,31 @@ const SelectInput: FC<SelectInputProps> = ({
   ...rest
 }) => {
   return (
-    <select
-      value={selected.value}
-      onChange={(e) => {
-        const foundedOption = options.find(
-          (item) => item.value === e.target.value
-        );
-        if (foundedOption) {
-          setSelected(foundedOption);
-        }
-      }}
-    >
-      {options.map((item) => (
-        <option value={item.value} key={item.value}>
-          {item.text}
-        </option>
-      ))}
-    </select>
+    <div className="select-container">
+      <img
+        alt="select"
+        className="select-icon"
+        src="/images/select-arrow.png"
+      />
+
+      <select
+        value={selected.value}
+        onChange={(e) => {
+          const foundedOption = options.find(
+            (item) => item.value === e.target.value
+          );
+          if (foundedOption) {
+            setSelected(foundedOption);
+          }
+        }}
+      >
+        {options.map((item) => (
+          <option value={item.value} key={item.value}>
+            {item.text}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 

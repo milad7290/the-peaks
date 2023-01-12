@@ -8,6 +8,7 @@ export type StoryState = {
   totalTopHome: number;
   totalCatBaseHome: number;
   totalSearch: number;
+  responsePagesCountSearch: number;
   topHomeItems: IStory[];
   catBaseHomeItems: IStory[];
   searchItems: IStory[];
@@ -15,28 +16,32 @@ export type StoryState = {
   fetchTopStoryLoading: boolean;
   fetchCatBaseStoryLoading: boolean;
   fetchSearchStoryLoading: boolean;
+  fetchSearchStoryConcatLoading: boolean;
   detailLoading: boolean;
   fetchTopStoryError?: ErrorReason | null;
   fetchCatBaseStoryError?: ErrorReason | null;
   fetchSearchStoryError?: ErrorReason | null;
+  fetchSearchStoryConcatError?:ErrorReason | null;
   detailError?: ErrorReason | null;
 };
 
 export const storyInitialState: StoryState = Object.freeze({
   generalState: {
     pageSize: 15,
-    page: 0,
+    page: 1,
     query: "",
   },
   totalTopHome: 0,
   totalCatBaseHome: 0,
   totalSearch: 0,
+  responsePagesCountSearch: 0,
   topHomeItems: [],
   catBaseHomeItems: [],
   searchItems: [],
   fetchTopStoryLoading: false,
   fetchCatBaseStoryLoading: false,
   fetchSearchStoryLoading: false,
+  fetchSearchStoryConcatLoading: false,
   detailLoading: false,
 });
 
@@ -53,6 +58,9 @@ export enum StoryActionTypes {
   STORY_SEARCH_LIST_REQUEST = "story/search/request",
   STORY_SEARCH_LIST_SUCCESS = "story/search/success",
   STORY_SEARCH_LIST_FAILURE = "story/search/failure",
+  STORY_SEARCH_CONCAT_LIST_REQUEST = "story/search_concat/request",
+  STORY_SEARCH_CONCAT_LIST_SUCCESS = "story/search_concat/success",
+  STORY_SEARCH_CONCAT_LIST_FAILURE = "story/search_concat/failure",
   STORY_SEARCH_LIST_CLEAR = "story/search/clear",
   STORY_DETAIL_REQUEST = "story/detail/request",
   STORY_DETAIL_SUCCESS = "story/detail/success",
@@ -90,7 +98,6 @@ interface TopStoryFailureAction extends Action {
   payload: ErrorReason | null | undefined;
 }
 
-
 interface CatBaseStoryRequestAction extends Action {
   type: typeof StoryActionTypes.STORY_CAT_BASE_LIST_REQUEST;
 }
@@ -116,10 +123,28 @@ interface SearchStorySuccessAction extends Action {
   payload: {
     items: IStory[];
     total: number;
+    pages: number;
   };
 }
 interface SearchStoryFailureAction extends Action {
   type: typeof StoryActionTypes.STORY_SEARCH_LIST_FAILURE;
+  payload: ErrorReason | null | undefined;
+}
+
+interface SearchStoryConcatRequestAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_CONCAT_LIST_REQUEST;
+}
+
+interface SearchStoryConcatSuccessAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_CONCAT_LIST_SUCCESS;
+  payload: {
+    items: IStory[];
+    total: number;
+    pages: number;
+  };
+}
+interface SearchStoryConcatFailureAction extends Action {
+  type: typeof StoryActionTypes.STORY_SEARCH_CONCAT_LIST_FAILURE;
   payload: ErrorReason | null | undefined;
 }
 
@@ -155,7 +180,10 @@ export type StoryActions =
   | SearchStoryRequestAction
   | SearchStorySuccessAction
   | SearchStoryFailureAction
-  |SearchStoryClearAction
+  | SearchStoryConcatRequestAction
+  | SearchStoryConcatSuccessAction
+  | SearchStoryConcatFailureAction
+  | SearchStoryClearAction
   | StoryDetailRequestAction
   | StoryDetailSuccessAction
   | StoryDetailFailureAction;

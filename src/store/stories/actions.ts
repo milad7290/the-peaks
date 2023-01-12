@@ -61,6 +61,7 @@ export const StorySearchListRequest = (): StoryActions => ({
 export const StorySearchListSuccess = (payload: {
   items: IStory[];
   total: number;
+  pages: number;
 }): StoryActions => ({
   type: StoryActionTypes.STORY_SEARCH_LIST_SUCCESS,
   payload
@@ -70,6 +71,25 @@ export const StorySearchListFailure = (error?: ErrorReason| null): StoryActions 
   type: StoryActionTypes.STORY_SEARCH_LIST_FAILURE,
   payload: error
 });
+
+export const StorySearchListConcatRequest = (): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_CONCAT_LIST_REQUEST
+});
+
+export const StorySearchListConcatSuccess = (payload: {
+  items: IStory[];
+  total: number;
+  pages: number;
+}): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_CONCAT_LIST_SUCCESS,
+  payload
+});
+
+export const StorySearchListConcatFailure = (error?: ErrorReason| null): StoryActions => ({
+  type: StoryActionTypes.STORY_SEARCH_CONCAT_LIST_FAILURE,
+  payload: error
+});
+
 
 export const ClearSearchListSuccess = (): StoryActions => ({
   type: StoryActionTypes.STORY_SEARCH_LIST_CLEAR

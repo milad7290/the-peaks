@@ -1,10 +1,13 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import Page from "../../components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchLoadingSearchStory,
+  fetchLoadingSearchStoryConcat,
   generalStateStory,
   getSearchStories,
+  responsePagesCountSearchStories,
+  totalSearchStories,
 } from "../../store/stories/selectors";
 import type {} from "redux-thunk/extend-redux";
 import "./index.scss";
@@ -16,15 +19,26 @@ import SelectInput from "../../components/SelectInput";
 import LoadingPage from "../../components/LoadingPage";
 import {
   ClearSearchListSuccess,
-  StorySetQuery,
+  StorySetPage,
 } from "../../store/stories/actions";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchResult: FC = () => {
   const dispatch = useDispatch();
   const generalState = useSelector(generalStateStory);
 
   const loadingSearch = useSelector(fetchLoadingSearchStory);
+  const totalSearch = useSelector(totalSearchStories);
+  const responsePagesCountSearch = useSelector(responsePagesCountSearchStories);
+  
+  const loadingSearchConcat = useSelector(fetchLoadingSearchStoryConcat);
   const searchStories = useSelector(getSearchStories);
+
+  const fetchData = () => {
+    if (responsePagesCountSearch > generalState.page) {
+      dispatch(StorySetPage(generalState.page + 1));
+    }
+  };
 
   const options = [
     { text: "Newest First", value: "newest" },
@@ -92,30 +106,41 @@ const SearchResult: FC = () => {
                 />
               </div>
             </div>
-
-            {searchStories.length > 0 ? (
-              <div className="parent-story-container">
-                {searchStories.map((story) => (
-                  <PartialStory
-                    story={story}
-                    key={story.id}
-                    storyOutputType={StoryOutputType.MainNoTriadText}
-                  />
-                ))}
-              </div>
-            ) : (
-              <>
-                {generalState.query.length > 0 ? (
-                  <p className="no-result">
-                    There is no result for your search
-                  </p>
-                ) : (
-                  <p className="please-start-search">
-                    Please type anything to start the searching
-                  </p>
-                )}
-              </>
-            )}
+            <InfiniteScroll
+              dataLength={searchStories.length}
+              next={fetchData}
+              hasMore={true}
+              loader={loadingSearchConcat && <h4 className="load-more">loading...</h4>}
+              endMessage={
+                <p className="end-message">
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {searchStories.length > 0 ? (
+                <div className="parent-story-container">
+                  {searchStories.map((story) => (
+                    <PartialStory
+                      story={story}
+                      key={story.id}
+                      storyOutputType={StoryOutputType.MainNoTriadText}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <>
+                  {generalState.query.length > 0 ? (
+                    <p className="no-result">
+                      There is no result for your search
+                    </p>
+                  ) : (
+                    <p className="please-start-search">
+                      Please type anything to start the searching
+                    </p>
+                  )}
+                </>
+              )}
+            </InfiniteScroll>
           </section>
         </div>
       )}

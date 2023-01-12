@@ -15,12 +15,12 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
 
       case StoryActionTypes.STORY_SET_PAGE_SIZE:
         draft.generalState.pageSize = action.payload;
-        draft.generalState.page = 0;
+        draft.generalState.page = 1;
         return;
 
       case StoryActionTypes.STORY_SET_QUERY:
         draft.generalState.query = action.payload;
-        draft.generalState.page = 0;
+        draft.generalState.page = 1;
         return;
 
       case StoryActionTypes.STORY_TOP_LIST_REQUEST:
@@ -64,6 +64,7 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
         draft.searchItems = action.payload.items;
         draft.fetchSearchStoryLoading = false;
         draft.totalSearch = action.payload.total;
+        draft.responsePagesCountSearch = action.payload.pages;
         return;
 
       case StoryActionTypes.STORY_SEARCH_LIST_FAILURE:
@@ -71,11 +72,29 @@ export default (state: StoryState = storyInitialState, action: StoryActions) =>
         draft.fetchSearchStoryError = action.payload;
         return;
 
+      case StoryActionTypes.STORY_SEARCH_CONCAT_LIST_REQUEST:
+        draft.fetchSearchStoryConcatLoading = true;
+        draft.fetchSearchStoryConcatError = null;
+        return;
+
+      case StoryActionTypes.STORY_SEARCH_CONCAT_LIST_SUCCESS:
+        draft.searchItems = [...draft.searchItems, ...action.payload.items];
+        draft.fetchSearchStoryConcatLoading = false;
+        draft.totalSearch = action.payload.total;
+        draft.responsePagesCountSearch = action.payload.pages;
+        return;
+
+      case StoryActionTypes.STORY_SEARCH_CONCAT_LIST_FAILURE:
+        draft.fetchSearchStoryConcatLoading = false;
+        draft.fetchSearchStoryConcatError = action.payload;
+        return;
+
       case StoryActionTypes.STORY_SEARCH_LIST_CLEAR:
         draft.generalState.query = "";
         draft.searchItems = [];
         draft.fetchSearchStoryLoading = false;
         draft.totalSearch = 0;
+        draft.responsePagesCountSearch = 0;
         return;
 
       case StoryActionTypes.STORY_DETAIL_REQUEST:

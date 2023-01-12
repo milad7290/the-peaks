@@ -28,6 +28,10 @@ export const fetchLoadingSearchStory = createSelector([getStory], (story) => {
   return story.fetchSearchStoryLoading;
 });
 
+export const fetchLoadingSearchStoryConcat = createSelector([getStory], (story) => {
+  return story.fetchSearchStoryConcatLoading;
+});
+
 export const detailLoadingStory = createSelector([getStory], (story) => {
   return story.detailLoading;
 });
@@ -42,6 +46,10 @@ export const fetchErrorCatBaseStory = createSelector([getStory], (story) => {
 
 export const fetchErrorSearchStory = createSelector([getStory], (story) => {
   return story.fetchSearchStoryError;
+});
+
+export const fetchErrorSearchConcatError = createSelector([getStory], (story) => {
+  return story.fetchSearchStoryConcatError;
 });
 
 
@@ -59,6 +67,10 @@ export const totalCatBaseStories = createSelector([getStory], (story) => {
 
 export const totalSearchStories = createSelector([getStory], (story) => {
   return story.totalSearch;
+});
+
+export const responsePagesCountSearchStories = createSelector([getStory], (story) => {
+  return story.responsePagesCountSearch;
 });
 
 export const selectedStory = createSelector([getStory], (story) => {

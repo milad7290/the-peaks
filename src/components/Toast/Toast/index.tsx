@@ -30,7 +30,7 @@ const Toast: FC<ToastProps> = ({ children, id, type, ...rest }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       removeToast(id);
-    }, 3000); // delay
+    }, 3000); 
 
     return () => {
       clearTimeout(timer);

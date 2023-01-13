@@ -15,13 +15,13 @@
     width: 50px;
     height: 50px;
     border: 6px solid white;
-    border-top: 6px solid #09357B;
-    border-right: 6px solid #09357B;
-    border-left: 6px solid #09357B;
+    border-top: 6px solid #09357b;
+    border-right: 6px solid #09357b;
+    border-left: 6px solid #09357b;
     border-radius: 50%;
     animation: spinner 1s linear infinite;
   }
-  
+
   .spinner-container {
     display: grid;
     align-items: center;
@@ -33,5 +33,4 @@
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
-
 }

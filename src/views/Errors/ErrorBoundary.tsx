@@ -35,8 +35,8 @@ export class ErrorBoundary extends PureComponent<Props, State> {
           }}
         >
           There is something wrong with this part of{" "}
-          <span style={{ color: "#000", fontWeight: "bold" }}>Peaks</span>, it
-          will be handle ASAP
+          <span style={{ color: "#000", fontWeight: "bold" }}>The Peaks</span>,
+          it will be handle ASAP
         </p>
       );
     }

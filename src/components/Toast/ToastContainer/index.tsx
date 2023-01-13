@@ -10,7 +10,6 @@ interface ToastContainerProps {
 }
 
 const ToastContainer: FC<ToastContainerProps> = ({ toasts }) => {
-  // return <div className="toast-wrapper">{toasts}</div>;
 
   return createPortal(
     <div className="toast-container-wrapper">

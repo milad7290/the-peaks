@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import Page from "../../components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,7 +7,6 @@ import {
   generalStateStory,
   getSearchStories,
   responsePagesCountSearchStories,
-  totalSearchStories,
 } from "../../store/stories/selectors";
 import type {} from "redux-thunk/extend-redux";
 import "./index.scss";
@@ -23,6 +22,7 @@ import {
 } from "../../store/stories/actions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import usePrevious from "../../hooks/usePrevious";
+import { ErrorBoundary } from "../Errors/ErrorBoundary";
 
 const SearchResult: FC = () => {
   const dispatch = useDispatch();
@@ -110,11 +110,13 @@ const SearchResult: FC = () => {
                 </Link>
               </div>
               <div className="right-part">
-                <SelectInput
-                  selected={selected}
-                  setSelected={setSelected}
-                  options={options}
-                />
+                <ErrorBoundary>
+                  <SelectInput
+                    selected={selected}
+                    setSelected={setSelected}
+                    options={options}
+                  />
+                </ErrorBoundary>
               </div>
             </div>
             <InfiniteScroll
@@ -133,11 +135,12 @@ const SearchResult: FC = () => {
               {searchStories.length > 0 ? (
                 <div className="parent-story-container">
                   {searchStories.map((story) => (
-                    <PartialStory
-                      story={story}
-                      key={story.id}
-                      storyOutputType={StoryOutputType.MainNoTriadText}
-                    />
+                    <ErrorBoundary key={story.id}>
+                      <PartialStory
+                        story={story}
+                        storyOutputType={StoryOutputType.MainNoTriadText}
+                      />
+                    </ErrorBoundary>
                   ))}
                 </div>
               ) : (

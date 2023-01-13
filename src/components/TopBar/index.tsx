@@ -1,12 +1,4 @@
-import PropTypes from "prop-types";
-import React, {
-  ChangeEvent,
-  FC,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { debounce } from "lodash";
 import "./index.scss";
@@ -20,10 +12,7 @@ const TopBar: FC<TopBarProps> = ({ ...rest }) => {
   const dispatch = useDispatch();
   const generalState = useSelector(generalStateStory);
 
-  const [value, setValue] = useState(generalState.query);
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setValue(event.target.value);
     dispatch(StorySetQuery(event.target.value));
   };
 
@@ -48,7 +37,7 @@ const TopBar: FC<TopBarProps> = ({ ...rest }) => {
     <header className="root-header">
       <div className="page-container">
         <div className="header-content">
-          <Link to={"/"} >
+          <Link to={"/"}>
             <img alt="logo" className="logo" src="/images/Logo_White.png" />
           </Link>
 

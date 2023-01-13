@@ -1,22 +1,20 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Page from "../../components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchLoadingSearchStory,
-  generalStateStory,
   getSearchStories,
 } from "../../store/stories/selectors";
 import type {} from "redux-thunk/extend-redux";
 import "./index.scss";
 import PartialStory from "../../components/Story/PartialStory";
 import { StoryOutputType } from "../../models/enums/story/story-output-type.enum";
-import { Link } from "react-router-dom";
 import { getBookmarks } from "../../providers/bookmark.provider";
 import { fetchSearchStories } from "../../services/stories/stories.service";
 import SelectInput from "../../components/SelectInput";
 import { ClearSearchListSuccess } from "../../store/stories/actions";
 import LoadingPage from "../../components/LoadingPage";
-import { useToast } from "../../hooks/useToast";
+import { ErrorBoundary } from "../Errors/ErrorBoundary";
 
 const Bookmarks: FC = () => {
   const dispatch = useDispatch();
@@ -63,22 +61,25 @@ const Bookmarks: FC = () => {
                 <h2 className="main-page-title">All bookmark</h2>
               </div>
               <div className="right-part">
-                <SelectInput
-                  selected={selected}
-                  setSelected={setSelected}
-                  options={options}
-                />
+                <ErrorBoundary>
+                  <SelectInput
+                    selected={selected}
+                    setSelected={setSelected}
+                    options={options}
+                  />
+                </ErrorBoundary>
               </div>
             </div>
 
             {bookmarks.length > 0 ? (
               <div className="parent-story-container">
                 {bookmarks.map((story) => (
-                  <PartialStory
-                    story={story}
-                    key={story.id}
-                    storyOutputType={StoryOutputType.MainNoTriadText}
-                  />
+                  <ErrorBoundary key={story.id}>
+                    <PartialStory
+                      story={story}
+                      storyOutputType={StoryOutputType.MainNoTriadText}
+                    />
+                  </ErrorBoundary>
                 ))}
               </div>
             ) : (

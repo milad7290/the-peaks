@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { FC } from "react";
 import "./index.scss";
 
-const LoadingPage: FC = ({ ...rest }) => {
+const LoadingPage: FC = () => {
   return (
     <div className="page-container">
       <section className="loading-section">

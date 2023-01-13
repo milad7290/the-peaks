@@ -1,5 +1,4 @@
 import { createContext, useCallback, useState } from "react";
-import { ToastType } from "../../../models/enums/story/toast-type.enum";
 import { IToastConfig } from "../../../models/interfaces/other/toast-config";
 import ToastContainer from "../ToastContainer";
 

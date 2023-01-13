@@ -19,6 +19,7 @@ import { StoryOutputType } from "../../models/enums/story/story-output-type.enum
 import { Link } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
 import SelectInput from "../../components/SelectInput";
+import { ErrorBoundary } from "../Errors/ErrorBoundary";
 
 const Home: FC = () => {
   const dispatch = useDispatch();
@@ -90,11 +91,13 @@ const Home: FC = () => {
                 </Link>
               </div>
               <div className="right-part">
-                <SelectInput
-                  selected={selected}
-                  setSelected={setSelected}
-                  options={options}
-                />
+                <ErrorBoundary>
+                  <SelectInput
+                    selected={selected}
+                    setSelected={setSelected}
+                    options={options}
+                  />
+                </ErrorBoundary>
               </div>
             </div>
 
@@ -102,26 +105,31 @@ const Home: FC = () => {
               <>
                 <div className="top-story-container">
                   <div className="head-line-story">
-                    <PartialStory
-                      story={topHomeStories[0]}
-                      storyOutputType={StoryOutputType.HeadLine}
-                    />
+                    <ErrorBoundary>
+                      <PartialStory
+                        story={topHomeStories[0]}
+                        storyOutputType={StoryOutputType.HeadLine}
+                      />
+                    </ErrorBoundary>
                   </div>
                   {topHomeStories.slice(1, 5).map((story, index) => (
-                    <PartialStory
-                      key={story.id}
-                      story={story}
-                      storyOutputType={
-                        index < 2
-                          ? StoryOutputType.HomeTop
-                          : StoryOutputType.HomeTopImageLess
-                      }
-                    />
+                    <ErrorBoundary key={story.id}>
+                      <PartialStory
+                        story={story}
+                        storyOutputType={
+                          index < 2
+                            ? StoryOutputType.HomeTop
+                            : StoryOutputType.HomeTopImageLess
+                        }
+                      />
+                    </ErrorBoundary>
                   ))}
                 </div>
                 <div className="bottom-story-container">
                   {topHomeStories.slice(5, 8).map((story) => (
-                    <PartialStory key={story.id} story={story} />
+                    <ErrorBoundary key={story.id}>
+                      <PartialStory story={story} />
+                    </ErrorBoundary>
                   ))}
                 </div>
               </>
@@ -133,11 +141,12 @@ const Home: FC = () => {
               <h2 className="secondary-title">Sports</h2>
               <div className="secondary-story-container">
                 {catBaseHomeStories.map((story) => (
-                  <PartialStory
-                    key={story.id}
-                    story={story}
-                    storyOutputType={StoryOutputType.MainNoTriadText}
-                  />
+                  <ErrorBoundary key={story.id}>
+                    <PartialStory
+                      story={story}
+                      storyOutputType={StoryOutputType.MainNoTriadText}
+                    />
+                  </ErrorBoundary>
                 ))}
               </div>
             </section>

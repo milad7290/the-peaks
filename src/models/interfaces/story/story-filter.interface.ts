@@ -6,4 +6,5 @@ export interface IStoryFilter {
   section?: string | null;
   orderBy?: string | null;
   showFields?: string | null;
+  ids?: string | null;
 }

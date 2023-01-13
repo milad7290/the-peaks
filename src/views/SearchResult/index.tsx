@@ -22,16 +22,17 @@ import {
   StorySetPage,
 } from "../../store/stories/actions";
 import InfiniteScroll from "react-infinite-scroll-component";
+import usePrevious from "../../hooks/usePrevious";
 
 const SearchResult: FC = () => {
   const dispatch = useDispatch();
   const generalState = useSelector(generalStateStory);
 
   const loadingSearch = useSelector(fetchLoadingSearchStory);
-  const totalSearch = useSelector(totalSearchStories);
-  const responsePagesCountSearch = useSelector(responsePagesCountSearchStories);
-  
   const loadingSearchConcat = useSelector(fetchLoadingSearchStoryConcat);
+
+  const responsePagesCountSearch = useSelector(responsePagesCountSearchStories);
+
   const searchStories = useSelector(getSearchStories);
 
   const fetchData = () => {
@@ -48,19 +49,29 @@ const SearchResult: FC = () => {
     options[0]
   );
 
+  const prevSelected = usePrevious({ selected }) as any;
+
   const getHomeData = useCallback(() => {
     if (generalState.query.length > 0) {
-      dispatch(
-        fetchSearchStories({
-          useSearch: true,
-          page: generalState.page,
-          pageSize: generalState.pageSize,
-          query: generalState.query,
-          section: "news",
-          orderBy: selected.value,
-          showFields: "headline,trailText,thumbnail",
-        })
-      );
+      if (
+        prevSelected &&
+        prevSelected.selected.value !== selected.value &&
+        generalState.page > 1
+      ) {
+        dispatch(StorySetPage(1));
+      } else {
+        dispatch(
+          fetchSearchStories({
+            useSearch: true,
+            page: generalState.page,
+            pageSize: generalState.pageSize,
+            query: generalState.query,
+            section: "news",
+            orderBy: selected.value,
+            showFields: "headline,trailText,thumbnail",
+          })
+        );
+      }
     } else {
       dispatch(ClearSearchListSuccess());
     }
@@ -110,7 +121,9 @@ const SearchResult: FC = () => {
               dataLength={searchStories.length}
               next={fetchData}
               hasMore={true}
-              loader={loadingSearchConcat && <h4 className="load-more">loading...</h4>}
+              loader={
+                loadingSearchConcat && <h4 className="load-more">loading...</h4>
+              }
               endMessage={
                 <p className="end-message">
                   <b>Yay! You have seen it all</b>

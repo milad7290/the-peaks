@@ -8,6 +8,7 @@ export const GenerateUrl = ({
   section,
   orderBy = "newest",
   showFields,
+  ids
 }: IStoryFilter): string => {
   let url = useSearch ? "search?" :  "?" ;
   if (page) {
@@ -27,6 +28,9 @@ export const GenerateUrl = ({
   }
   if (showFields) {
     url = url + `show-fields=${showFields}&`;
+  }
+  if (ids) {
+    url = url + `ids=${ids}&`;
   }
   return url;
 };

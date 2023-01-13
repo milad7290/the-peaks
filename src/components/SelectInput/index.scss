@@ -31,8 +31,9 @@
 
 @media (min-width: 320px) and (max-width: 767px) {
   .select-container {
+    top: 27px;
+
     select {
-      top: 36px;
     }
   }
 }

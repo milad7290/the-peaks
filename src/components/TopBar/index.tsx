@@ -48,7 +48,7 @@ const TopBar: FC<TopBarProps> = ({ ...rest }) => {
     <header className="root-header">
       <div className="page-container">
         <div className="header-content">
-          <Link to={"/"} className="bookmark-link">
+          <Link to={"/"} >
             <img alt="logo" className="logo" src="/images/Logo_White.png" />
           </Link>
 

@@ -1,0 +1,34 @@
+@import "../../../assets/styles/variables/theme.scss";
+
+.not-found-container {
+  text-align: center;
+  width: 100%;
+  .select-icon {
+  }
+  a {
+    display: block;
+    border: none;
+    width: fit-content;
+    margin: auto;
+
+    .back-to-home {
+      background: $primaryColor;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .not-found-container {
+    .select-icon {
+      width: 90%;
+      margin: auto;
+    }
+    .back-to-home {
+    }
+  }
+}

@@ -1,33 +1,58 @@
-import React, { FC, useCallback, useEffect, useRef } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import Page from "../../components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  detailErrorStory,
   detailLoadingStory,
   selectedStory,
 } from "../../store/stories/selectors";
 import type {} from "redux-thunk/extend-redux";
 import "./index.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { fetchStory } from "../../services/stories/stories.service";
 import LoadingPage from "../../components/LoadingPage";
+import {
+  addToBookmark,
+  checkForBookmark,
+  removeBookmark,
+} from "../../providers/bookmark.provider";
 
 const StoryDetails: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const article = useSelector(selectedStory);
   const loading = useSelector(detailLoadingStory);
+  const error = useSelector(detailErrorStory);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const articleId = searchParams.get("id");
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+
   const getData = useCallback(() => {
-    dispatch(fetchStory(articleId));
+    if (articleId) {
+      dispatch(fetchStory(articleId));
+      const isBookmarked = checkForBookmark(articleId);
+      setIsBookmarked(isBookmarked);
+    }
   }, [dispatch, articleId]);
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (error && (error.statusCode === 404 || error.statusCode === "unknown")) {
+      navigate("/404");
+    }
+  }, [error]);
 
   const myRef = useRef<any>(null);
 
@@ -37,6 +62,22 @@ const StoryDetails: FC = () => {
     }
   }, [article, myRef]);
 
+  const addToBookMarkHandle = () => {
+    if (articleId) {
+      addToBookmark(articleId);
+      const isBookmarked = checkForBookmark(articleId);
+      setIsBookmarked(isBookmarked);
+    }
+  };
+
+  const removeFromBookMarkHandle = () => {
+    if (articleId) {
+      removeBookmark(articleId);
+      const isBookmarked = checkForBookmark(articleId);
+      setIsBookmarked(isBookmarked);
+    }
+  };
+
   return (
     <Page title="Story details">
       <div className="page-container">
@@ -45,7 +86,14 @@ const StoryDetails: FC = () => {
         ) : (
           <div className="details-section">
             <div className="top-info">
-              <button className="bookmark-button">
+              <button
+                onClick={() => {
+                  isBookmarked
+                    ? removeFromBookMarkHandle()
+                    : addToBookMarkHandle();
+                }}
+                className="bookmark-button"
+              >
                 <span>
                   {" "}
                   <img
@@ -54,7 +102,7 @@ const StoryDetails: FC = () => {
                     src="/images/bookmarkon-icon@2x.svg"
                   />
                 </span>
-                Add BOOKMARK
+                {isBookmarked ? "Remove" : "Add"} BOOKMARK
               </button>
 
               <span className="article-publish-date">
@@ -86,9 +134,7 @@ const StoryDetails: FC = () => {
                     />
                   </div>
                 )}
-                <p>
-                 {article?.webTitle}
-                </p>
+                <p>{article?.webTitle}</p>
               </div>
             </div>
           </div>

@@ -40,30 +40,4 @@ export const HttpProvider = <T>({
   return axios(fullUrl, config);
 };
 
-export const HttpProviderPutFileWithFetch = <T>({
-  url,
-  data,
-  contentType,
-}: {
-  url: string;
-  data?: any;
-  params?: any;
-  method?: HttpMethod;
-  contentType: string;
-}): Promise<Response> => {
-  return fetch(url, {
-    method: "PUT",
-    body: data,
-    headers: {
-      "Content-Type": contentType,
-    },
-  });
-};
-
-export const FetchResultType = {
-  ServerError: "server_error",
-  FetchError: "fetch_error",
-  Success: "success",
-};
-
 export type HttpMethod = "POST" | "GET" | "PUT" | "DELETE" | "PATCH";

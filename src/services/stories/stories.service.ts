@@ -192,16 +192,25 @@ export const fetchStory =
         }
       }
     } catch (error: any) {
-      const { response } = error;
-      dispatch(
-        StoryDetailFailure(
-          response && response.data
-            ? response.data
-            : {
-                message: "Something went wrong!",
-                status: "unknown",
-              }
-        )
-      );
+      if (
+        error.response &&
+        error.response.status &&
+        error.response.status === 404
+      ) {
+        StoryDetailFailure({ message: "Not found!", statusCode: 404 });
+      } else {
+        const { response } = error;
+
+        dispatch(
+          StoryDetailFailure(
+            response
+              ? response.data
+              : {
+                  message: "Something went wrong!",
+                  statusCode: "unknown",
+                }
+          )
+        );
+      }
     }
   };

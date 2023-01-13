@@ -47,22 +47,7 @@
     }
     .right-part {
       width: 30%;
-      select {
-        width: 90%;
-        float: right;
-        height: 40px;
-        position: relative;
-        top: 6px;
-        border: none;
-        border-bottom: 1px solid;
-        font-family: "Roboto";
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        outline: none;
-        background-color: transparent;
-      }
+  
     }
   }
 
@@ -100,6 +85,17 @@
     grid-row-gap: 30px;
     margin-top: 30px;
   }
+
+  .no-result {
+    text-align: center;
+    padding-top: 100px;
+    font-size: 22px;
+    color: gray;
+  }
+
+  .select-container{
+    top: -19px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
@@ -109,7 +105,7 @@
         display: block;
         width: 49%;
         .main-page-title {
-          font-size: 28px;
+          font-size: 25px;
           margin-left: 5px;
         }
         .bookmark-link {
@@ -123,9 +119,7 @@
       }
       .right-part {
         width: 49%;
-        select {
-          top: -10px;
-        }
+ 
       }
     }
 
@@ -136,6 +130,10 @@
       margin-top: 25px;
       margin-bottom: 50px;
       width: 100%;
+    }
+
+    .no-result {
+      font-size: 18px;
     }
   }
 }

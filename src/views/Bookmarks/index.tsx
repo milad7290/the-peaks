@@ -16,6 +16,7 @@ import { fetchSearchStories } from "../../services/stories/stories.service";
 import SelectInput from "../../components/SelectInput";
 import { ClearSearchListSuccess } from "../../store/stories/actions";
 import LoadingPage from "../../components/LoadingPage";
+import { useToast } from "../../hooks/useToast";
 
 const Bookmarks: FC = () => {
   const dispatch = useDispatch();

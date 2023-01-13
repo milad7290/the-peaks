@@ -1,0 +1,13 @@
+@import "../../../assets/styles/variables/theme.scss";
+
+.toast-container-wrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .toast-container-wrapper {
+  }
+}

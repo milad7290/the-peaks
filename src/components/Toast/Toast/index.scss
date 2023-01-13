@@ -1,0 +1,45 @@
+@import "../../../assets/styles/variables/theme.scss";
+
+.toast-wrapper {
+  padding: 0;
+  color: #494e5c;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+  max-height: 32px;
+  height: fit-content;
+  p {
+    color: white;
+    margin: 0;
+    height: 32px;
+    padding: 7px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    span {
+      .toast-icon {
+        height: 10.5px;
+        width: auto;
+      }
+    }
+  }
+}
+
+.success-class {
+  background-color: $successColor;
+}
+
+.error-class {
+  background-color: $errorColor;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .toast-wrapper {
+  }
+}

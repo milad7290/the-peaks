@@ -17,10 +17,13 @@ import {
   checkForBookmark,
   removeBookmark,
 } from "../../providers/bookmark.provider";
+import { useToast } from "../../hooks/useToast";
+import { ToastType } from "../../models/enums/story/toast-type.enum";
 
 const StoryDetails: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { addToast } = useToast();
 
   const article = useSelector(selectedStory);
   const loading = useSelector(detailLoadingStory);
@@ -67,6 +70,11 @@ const StoryDetails: FC = () => {
       addToBookmark(articleId);
       const isBookmarked = checkForBookmark(articleId);
       setIsBookmarked(isBookmarked);
+      addToast({
+        content: "Saved to bookmark",
+        type: ToastType.Success,
+        icon: "/images/bookmarkon-icon@2x.svg",
+      });
     }
   };
 
@@ -75,6 +83,11 @@ const StoryDetails: FC = () => {
       removeBookmark(articleId);
       const isBookmarked = checkForBookmark(articleId);
       setIsBookmarked(isBookmarked);
+      addToast({
+        content: "Removed from bookmark",
+        type: ToastType.Error,
+        icon: "/images/bookmarkoff-icon@2x.svg",
+      });
     }
   };
 

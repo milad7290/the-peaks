@@ -4,12 +4,15 @@ import { Provider } from "react-redux";
 import "./App.scss";
 import routes, { renderRoutes } from "./routes";
 import store from "../src/store";
+import { ToastProvider } from "./components/Toast/ToastProvide";
 
 function App() {
   return (
     <div className="root">
       <Provider store={store()}>
-        <Router>{renderRoutes(routes)}</Router>
+        <ToastProvider>
+          <Router>{renderRoutes(routes)}</Router>
+        </ToastProvider>
       </Provider>
     </div>
   );
